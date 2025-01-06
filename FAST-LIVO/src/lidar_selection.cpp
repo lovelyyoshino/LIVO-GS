@@ -1026,6 +1026,7 @@ V3F LidarSelector::getpixel(cv::Mat img, V2D pc)
 
 void LidarSelector::detect(cv::Mat img, PointCloudXYZI::Ptr pg) 
 {
+    img_rx = img.clone();
     if(width!=img.cols || height!=img.rows)
     {
         // std::cout<<"Resize the img scale !!!"<<std::endl;

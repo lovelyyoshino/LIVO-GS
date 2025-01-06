@@ -15,6 +15,11 @@ from diff_gaussian_rasterization import GaussianRasterizationSettings, GaussianR
 from scene.gaussian_model import GaussianModel
 from utils.sh_utils import eval_sh
 
+import torchvision
+import os
+
+count_epoch = 0
+
 def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, scaling_modifier = 1.0, override_color = None):
     """
     Render the scene. 
@@ -91,6 +96,17 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
         scales = scales,
         rotations = rotations,
         cov3D_precomp = cov3D_precomp)
+
+    # Show rgb image
+    global count_epoch
+    count_epoch = count_epoch + 1
+    if count_epoch > 0 and count_epoch%100 == 0:
+        trans = torchvision.transforms.ToPILImage()
+
+        rgb_image = trans(torch.clamp(rendered_image, 0.0, 1.0))
+        if not os.path.exists('output/rgb/'):
+            os.mkdir('output/rgb/')
+        rgb_image.save(f'output/rgb/rgb_iter_{count_epoch:0>6d}.png')
 
     # Those Gaussians that were frustum culled or had a radius of 0 were not visible.
     # They will be excluded from value updates used in the splitting criteria.

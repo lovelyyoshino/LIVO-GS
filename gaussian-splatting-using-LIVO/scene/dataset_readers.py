@@ -271,7 +271,7 @@ def readCamerasFromKeyFrameTraj(path, trajfile, white_background, is_train=True,
 
         count += 1
 
-        if is_train:
+        if is_train:                             # train和test比例为5:1
             if count % per_frame == 0:
                 continue
         else:
@@ -305,8 +305,8 @@ def readCamerasFromKeyFrameTraj(path, trajfile, white_background, is_train=True,
         # "y": 600.0,
         # "cx": 599.5,
         # "cy": 339.5,
-        focal_length_x = 600.0# 535.4 #517.306408  # 481.20 #600.0481.2 535.4 # 517.306408  # 481.20   481.2
-        focal_length_y = 600.0 # 516.46921  480.00 #600.0 480.0 # 539.2 #516.46921  #-
+        focal_length_x = 413.795# 535.4 #517.306408  # 481.20 #600.0481.2 535.4 # 517.306408  # 481.20   481.2
+        focal_length_y = 431.55 # 516.46921  480.00 #600.0 480.0 # 539.2 #516.46921  #-
         # focal_length_x = 481.20 #600.0
         # focal_length_y =  -480.00 #600.0
         FovX = focal2fov(focal_length_x, rgb.size[0])
